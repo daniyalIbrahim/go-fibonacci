@@ -70,15 +70,21 @@ func (h *FibonacciHandlers) Get(w http.ResponseWriter, r *http.Request) {
 
 	fibo.ModifySecondVal(bigNthNumber)
 
-	h.Lock()
-	FiboValue := fibo.FindFibonacci(bigNthNumber)
-	fibo.ModifyThirdVal(FiboValue)
-	h.Unlock()
+	if bigNthNumber <= 11 {
+		h.Lock()
+		FiboValue := fibo.FindFibonacci(bigNthNumber)
+		fibo.ModifyThirdVal(FiboValue)
+		h.Unlock()
+		logger.Infof("the fibonacci number %v for the number %v is ", nthNumber, FiboValue)
+	} else if bigNthNumber >= 12 {
+		FiboValue := uint64(100)
+		fibo.ModifyThirdVal(FiboValue)
+		logger.Infof("the fibonacci number %v for the number %v is ", nthNumber, FiboValue)
+	}
 
 	fibo.ModifyFourthVal()
 	fibo.ModifyFifthVal()
 
-	logger.Infof("the fibonacci number %v for the number %v is ", nthNumber, FiboValue)
 	jsonBytes, err := json.Marshal(fibo)
 	if err != nil {
 		logger.Error(err)
