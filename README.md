@@ -11,6 +11,7 @@ The following steps will help understanding what is happening in this chunk of c
 
     mkdir myDirName    #this is the name of your directory
     cd /myDirName
+    ssh -T git@github.com # authenticate if you are logged in at your terminal
     git init
     touch readME.md   #this is to create an initial file to push
     git commit -m "enter commit message here"
